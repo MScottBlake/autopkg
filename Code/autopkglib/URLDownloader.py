@@ -348,7 +348,12 @@ class URLDownloader(URLGetter):
         self.output(f"Downloaded {self.env['pathname']}")
         self.env["url_downloader_summary_result"] = {
             "summary_text": "The following new items were downloaded:",
-            "data": {"download_path": self.env["pathname"]},
+            "data": {
+                "download_path": self.env["pathname"],
+                "last_modified": self.env["last_modified"],
+                "file_size": self.env["file_size"],
+                "etag": self.env["etag"],
+            },
         }
 
 
