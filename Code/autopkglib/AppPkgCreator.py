@@ -117,7 +117,7 @@ class AppPkgCreator(DmgMounter, PkgCreator):
             except KeyError:
                 raise ProcessorError(
                     f"The key '{version_key}' does not exist in the App "
-                    f"Bundle's Info.plist! ({app_path}/Contents/Info.plist) "
+                    f"Bundle's Info.plist! ({app_path}/Contents{os.sep}Info.plist) "
                     f"Please check the recipe and try again."
                 )
             # Trap all other errors.

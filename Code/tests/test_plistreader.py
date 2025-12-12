@@ -219,7 +219,6 @@ class TestPlistReader(unittest.TestCase):
             with patch.object(self.processor, "mount") as mock_mount:
                 with patch.object(self.processor, "unmount") as mock_unmount:
                     with patch("os.path.exists") as mock_exists:
-
                         # Setup mocks to trigger an exception
                         mock_parse.return_value = (dmg_path, True, internal_path)
                         mock_mount.return_value = mount_point
@@ -361,7 +360,7 @@ class TestPlistReader(unittest.TestCase):
         result = self.processor.find_bundle(search_dir)
         # Should return one of the bundles (order may vary based on glob)
         self.assertIsNotNone(result)
-        self.assertTrue(result.endswith("Contents/Info.plist"))
+        self.assertTrue(result.endswith(f"Contents{os.sep}Info.plist"))
 
     def test_find_bundle_ignores_symlinks_without_extensions(self):
         """Test find_bundle ignores symlinks without extensions."""

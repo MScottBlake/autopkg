@@ -100,7 +100,7 @@ class PlistReader(DmgMounter):
         otherwise None."""
         bundle_info_path = None
         if os.path.isdir(path):
-            test_info_path = os.path.join(path, "Contents/Info.plist")
+            test_info_path = os.path.join(path, "Contents", "Info.plist")
             if os.path.exists(test_info_path):
                 try:
                     with open(test_info_path, "rb") as f:
@@ -108,7 +108,7 @@ class PlistReader(DmgMounter):
                 except Exception:
                     raise ProcessorError(
                         f"File {path} looks like a bundle, but its "
-                        "'Contents/Info.plist' file cannot be parsed."
+                        f"'Contents{os.sep}Info.plist' file cannot be parsed."
                     )
                 if plist:
                     bundle_info_path = test_info_path
