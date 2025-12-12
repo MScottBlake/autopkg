@@ -116,6 +116,7 @@ class TestCodeSignatureVerifier(unittest.TestCase):
             "WARNING: Multiple paths match 'input_path' glob '/path/to/*.app':"
         )
 
+    @unittest.skipUnless(sys.platform == "Darwin", "Mac specific test")
     def test_main_skips_pkg_verification_on_old_macos(self):
         """Test that main() skips pkg verification on macOS 10.6."""
         pkg_path = os.path.join(self.tmp_dir.name, "test.pkg")
@@ -436,6 +437,7 @@ class TestCodeSignatureVerifier(unittest.TestCase):
         # Should not check authority names without expected_authority_names
 
     # Test operating system version handling
+    @unittest.skipUnless(sys.platform == "Darwin", "Mac specific test")
     def test_deep_verification_skipped_on_old_macos(self):
         """Test that deep verification is skipped on macOS < 10.9.5."""
         mock_proc = self._create_mock_process(returncode=0)
@@ -453,6 +455,7 @@ class TestCodeSignatureVerifier(unittest.TestCase):
         call_args = mock_popen.call_args[0][0]
         self.assertNotIn("--deep", call_args)
 
+    @unittest.skipUnless(sys.platform == "Darwin", "Mac specific test")
     def test_strict_verification_skipped_on_old_macos(self):
         """Test that strict verification is skipped on macOS < 10.11."""
         mock_proc = self._create_mock_process(returncode=0)
