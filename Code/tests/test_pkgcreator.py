@@ -352,8 +352,8 @@ class TestPkgCreator(unittest.TestCase):
             self.processor.main()
 
         request = self.processor.env["pkg_request"]
-        self.assertTrue(request["pkgroot"].startswith("/"))
-        self.assertTrue(request["scripts"].startswith("/"))
+        self.assertTrue(request["pkgroot"].startswith(os.sep))
+        self.assertTrue(request["scripts"].startswith(os.sep))
 
     @patch("autopkglib.PkgCreator.disconnect")
     @patch("autopkglib.PkgCreator.send_request")
