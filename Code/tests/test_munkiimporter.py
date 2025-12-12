@@ -2,6 +2,7 @@
 
 import os
 import plistlib
+import sys
 import unittest
 from copy import deepcopy
 from tempfile import TemporaryDirectory
@@ -146,6 +147,7 @@ class TestMunkiImporter(unittest.TestCase):
         self.assertEqual(result[1]["name"], "TestApp")
 
     # Test main method flow
+    @unittest.skipIf(sys.platform.startswith("win"), "os.path.relpath")
     @patch("subprocess.Popen")
     def test_main_calls_makepkginfo_with_basic_args(self, mock_popen):
         """Test that main() calls makepkginfo with correct basic arguments."""
@@ -177,6 +179,7 @@ class TestMunkiImporter(unittest.TestCase):
         actual_args = mock_popen.call_args[0][0]
         self.assertEqual(actual_args, expected_args)
 
+    @unittest.skipIf(sys.platform.startswith("win"), "os.path.relpath")
     @patch("subprocess.Popen")
     def test_main_adds_optional_makepkginfo_args(self, mock_popen):
         """Test that main() adds optional arguments to makepkginfo call."""
@@ -242,6 +245,7 @@ class TestMunkiImporter(unittest.TestCase):
         with self.assertRaisesRegex(ProcessorError, "makepkginfo execution failed"):
             self.processor.main()
 
+    @unittest.skipIf(sys.platform.startswith("win"), "os.path.relpath")
     @patch("subprocess.Popen")
     def test_main_merges_pkginfo_from_env(self, mock_popen):
         """Test that main() merges pkginfo data from environment."""
@@ -277,6 +281,7 @@ class TestMunkiImporter(unittest.TestCase):
         self.assertEqual(pkginfo_arg["description"], "Test application")
         self.assertEqual(pkginfo_arg["developer"], "Test Developer")
 
+    @unittest.skipIf(sys.platform.startswith("win"), "os.path.relpath")
     @patch("subprocess.Popen")
     def test_main_adds_metadata_additions(self, mock_popen):
         """Test that main() adds metadata_additions to pkginfo."""
@@ -310,6 +315,7 @@ class TestMunkiImporter(unittest.TestCase):
         self.assertEqual(pkginfo_arg["_metadata"]["created_by"], "AutoPkg")
         self.assertEqual(pkginfo_arg["_metadata"]["foo"], "bar")
 
+    @unittest.skipIf(sys.platform.startswith("win"), "os.path.relpath")
     @patch("subprocess.Popen")
     def test_main_sets_version_comparison_key(self, mock_popen):
         """Test that main() sets version_comparison_key when specified."""
@@ -395,6 +401,7 @@ class TestMunkiImporter(unittest.TestCase):
             os.path.join(self.munki_repo, "pkgs", "testing/TestApp-1.0.0.pkg"),
         )
 
+    @unittest.skipIf(sys.platform.startswith("win"), "os.path.relpath")
     @patch("subprocess.Popen")
     def test_main_forces_import_when_force_munkiimport_set(self, mock_popen):
         """Test that main() forces import when force_munkiimport is set."""
@@ -424,6 +431,7 @@ class TestMunkiImporter(unittest.TestCase):
         # Verify import proceeded
         self.assertEqual(self.processor.env["munki_repo_changed"], True)
 
+    @unittest.skipIf(sys.platform.startswith("win"), "os.path.relpath")
     @patch("subprocess.Popen")
     def test_main_copies_uninstaller_when_provided(self, mock_popen):
         """Test that main() copies uninstaller package when provided."""
@@ -495,6 +503,7 @@ class TestMunkiImporter(unittest.TestCase):
         self.assertEqual(summary["data"]["pkg_repo_path"], "TestApp-1.0.0.pkg")
 
     # Test edge cases and error conditions
+    @unittest.skipIf(sys.platform.startswith("win"), "os.path.relpath")
     def test_main_clears_existing_summary_result(self):
         """Test that main() clears any pre-existing summary result."""
         self.processor.env["munki_importer_summary_result"] = {"old": "data"}
