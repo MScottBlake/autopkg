@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import os
+import sys
 import unittest
 from tempfile import TemporaryDirectory
 from unittest.mock import Mock, patch
@@ -144,6 +145,7 @@ class TestCodeSignatureVerifier(unittest.TestCase):
 
         self.assertTrue(result)
 
+    @unittest.skipUnless(sys.platform == "Darwin", "Mac specific test")
     def test_codesign_verify_failure(self):
         """Test failed codesign verification."""
         mock_proc = self._create_mock_process(returncode=1, stderr="signature invalid")
@@ -154,6 +156,7 @@ class TestCodeSignatureVerifier(unittest.TestCase):
 
         self.assertFalse(result)
 
+    @unittest.skipUnless(sys.platform == "Darwin", "Mac specific test")
     def test_codesign_verify_with_requirement(self):
         """Test codesign verification with requirement string."""
         requirement = 'identifier "com.example.app"'
@@ -170,6 +173,7 @@ class TestCodeSignatureVerifier(unittest.TestCase):
         self.assertIn("--test-requirement", call_args)
         self.assertIn(f"={requirement}", call_args)
 
+    @unittest.skipUnless(sys.platform == "Darwin", "Mac specific test")
     def test_codesign_verify_with_deep_verification(self):
         """Test codesign verification with deep verification enabled."""
         mock_proc = self._create_mock_process(returncode=0)
@@ -185,6 +189,7 @@ class TestCodeSignatureVerifier(unittest.TestCase):
         call_args = mock_popen.call_args[0][0]
         self.assertIn("--deep", call_args)
 
+    @unittest.skipUnless(sys.platform == "Darwin", "Mac specific test")
     def test_codesign_verify_without_deep_verification(self):
         """Test codesign verification with deep verification disabled."""
         mock_proc = self._create_mock_process(returncode=0)
@@ -200,6 +205,7 @@ class TestCodeSignatureVerifier(unittest.TestCase):
         call_args = mock_popen.call_args[0][0]
         self.assertNotIn("--deep", call_args)
 
+    @unittest.skipUnless(sys.platform == "Darwin", "Mac specific test")
     def test_codesign_verify_with_strict_verification(self):
         """Test codesign verification with strict verification enabled."""
         mock_proc = self._create_mock_process(returncode=0)
@@ -215,6 +221,7 @@ class TestCodeSignatureVerifier(unittest.TestCase):
         call_args = mock_popen.call_args[0][0]
         self.assertIn("--strict", call_args)
 
+    @unittest.skipUnless(sys.platform == "Darwin", "Mac specific test")
     def test_codesign_verify_without_strict_verification(self):
         """Test codesign verification with strict verification disabled."""
         mock_proc = self._create_mock_process(returncode=0)
@@ -230,6 +237,7 @@ class TestCodeSignatureVerifier(unittest.TestCase):
         call_args = mock_popen.call_args[0][0]
         self.assertIn("--no-strict", call_args)
 
+    @unittest.skipUnless(sys.platform == "Darwin", "Mac specific test")
     def test_codesign_verify_with_additional_arguments(self):
         """Test codesign verification with additional arguments."""
         additional_args = ["--foo", "--bar"]
@@ -246,6 +254,7 @@ class TestCodeSignatureVerifier(unittest.TestCase):
         self.assertIn("--foo", call_args)
         self.assertIn("--bar", call_args)
 
+    @unittest.skipUnless(sys.platform == "Darwin", "Mac specific test")
     def test_codesign_verify_logs_debug_info(self):
         """Test that codesign verification logs debug info when enabled."""
         self.processor.env["CODE_SIGNATURE_VERIFICATION_DEBUG"] = "1"
