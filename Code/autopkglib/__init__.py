@@ -400,19 +400,12 @@ def find_recipe_by_identifier(identifier, search_dirs) -> str | None:
     return None
 
 
+from ._version import __version__
+
+
 def get_autopkg_version() -> str:
     """Gets the version number of autopkg"""
-    try:
-        version_file = importlib.resources.files(__name__).joinpath("version.plist")
-        with version_file.open("rb") as f:
-            version_plist = plistlib.load(f)
-    except Exception as ex:
-        log_err(f"Unable to get autopkg version: {ex}")
-        return "UNKNOWN"
-    try:
-        return version_plist["Version"]
-    except (AttributeError, TypeError):
-        return "UNKNOWN"
+    return __version__
 
 
 def version_equal_or_greater(this, that) -> bool:
@@ -1032,7 +1025,10 @@ def import_processors() -> None:
     #
     #    from Bar.Foo import Foo
     #
-    for name in filter(lambda f: f not in ("__init__", "xattr"), processor_files):
+    for name in filter(
+        lambda f: f not in ("__init__", "xattr") and not f.startswith("_"),
+        processor_files,
+    ):
         globals()[name] = getattr(
             __import__(__name__ + "." + name, fromlist=[name]), name
         )
