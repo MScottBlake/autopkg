@@ -626,7 +626,7 @@ ProcessorError if it fails for any reason.
         downloaded from the vendor
 - New `verify-trust-info` and `update-trust-info` verbs. These can be used to
   add "trust" hash information to a recipe override. If a parent recipe and/or
-  its processor(s)  is later updated (typically via a third-party recipe repo and
+  its processor(s) is later updated (typically via a third-party recipe repo and
   running `autopkg repo-update` against this or all recipe repos), this
   trust information will be invalid and prevent the recipe from running
   until the trust information has been updated. Running `verify-trust-info` with
@@ -957,7 +957,9 @@ ProcessorError if it fails for any reason.
   to arbitrary output variables for later use in recipes. (GH-56)
 - Recipe Repo URLs for 'repo-' commands can now also be given in short GitHub-ish forms:
   1) 'ghuser/reponame' or 2) 'reponame', which will prefix the 'autopkg/' org name.
+
   Full URLs at any address can be given as before.
+
 - Any input variable can now be set globally for all recipe runs by writing these as
   preference keys in the 'com.github.autopkg' domain. This is how the 'MUNKI_REPO' pref
   has been used up to now, but this now works for arbitrary keys, and the hardcoded
@@ -1029,7 +1031,7 @@ ProcessorError if it fails for any reason.
 - The "recipe" key formerly seen in overrides has been renamed "ParentRecipe". Its value is now a string -- the identifier of its parent recipes.
 - There is now essentially no difference between an "override" and a child recipe; a recipe can refer to a parent recipe, which can in turn refer to its own parent recipe, and so on.
 - Child recipes can override keys in the Input dictionary and/or add new key/value pairs to the Input dictionary. This is the same functionality that RecipeOverrides have.
-- Child recipes can add additional steps to the end of the Process of their ParentRecipe(s).  This is new functionality.
+- Child recipes can add additional steps to the end of the Process of their ParentRecipe(s). This is new functionality.
 - Searching for recipes has changed: the order of searching by name and by identifier have been swapped: identifier is preferred to simple name.
 - Certain Processors (specifically PkgInfoCreator and PkgCreator) are typically given paths to templates or resources or scripts pointing to the directory of the recipe. If a recipe can now have one or more parents, the meaning of "RECIPE_DIR" is a little unclear. So for this sort of thing, we now search the current child recipe directory for the requested resource, followed by any parent recipe's directory, then any parent recipe of the parent recipe's directory, etc. To support this behavior, give PkgInfoCreator and PkgCreator relative paths to PackageInfoTemplates and Resources and Scripts directories.
 - New verbs to help people learn about Processors:

@@ -39,6 +39,7 @@ with open("./test.nuspec", 'r') as f:
 ```
 
 ## Regenerating the definitions
+
 The definitions can be (re)created by running the `regenerate_nuspec_ds.py` script as
 shown below. The script automates some particulars around getting the schema `.xsd` file,
 and setting the appropriate XML namespace. The script has more details for the curious.

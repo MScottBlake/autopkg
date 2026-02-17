@@ -28,6 +28,7 @@ Now create your relocatable Python frameworks using the generated requirements.t
 ```
 
 ### Symlink the frameworks
+
 You can symlink in the python executables into a more useful path:
 
 ```sh
