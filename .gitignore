@@ -24,3 +24,6 @@ htmlcov
 # Virtual environments
 .venv/
 venv/
+
+# rumdl
+.rumdl_cache
