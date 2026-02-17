@@ -10,9 +10,28 @@ readme = "ReadMe.md"
 requires-python = ">=3.10"
 dependencies = []
 
+[dependency-groups]
+dev = [
+    "flake8>=7.3.0",
+    "flake8-bugbear>=24.12.12",
+    "pre-commit>=4.5.1",
+    "ruff>=0.15.1",
+]
+
 [tool.setuptools.dynamic]
 version = {attr = "autopkglib._version.__version__"}
 
 [tool.setuptools]
 package-dir = {"" = "Code"}
 packages = ["autopkgcmd", "autopkglib", "autopkgserver", "nuget"]
+
+[tool.ruff]
+line-length = 88
+src = ["Code"]
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["I"]
+
+[tool.ruff.lint.isort]
+known-third-party = ["appdirs", "certifi", "xattr"]

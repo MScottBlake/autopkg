@@ -3,7 +3,13 @@
 
 # don't track .pyc files or autopkgc
 *.pyc
+__pycache__/
 autopkgc
+
+# Build artifacts
+*.egg-info/
+build/
+dist/
 
 # IDE-specific files
 .vscode
