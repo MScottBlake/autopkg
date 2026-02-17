@@ -22,6 +22,7 @@ from hashlib import md5, sha1, sha256
 from urllib.request import Request, urlopen
 
 import certifi
+
 from autopkglib import ProcessorError
 from autopkglib.URLDownloader import URLDownloader
 

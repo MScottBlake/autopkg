@@ -174,7 +174,7 @@ class AutoPkgLib:
             shutil.copy(pkg_path, destination_pathname)
         except OSError as err:
             raise ProcessorError(
-                f"Can't copy {pkg_path} to {destination_pathname}: " f"{err.strerror}"
+                f"Can't copy {pkg_path} to {destination_pathname}: {err.strerror}"
             )
 
         return os.path.join(self.munki_repo, "pkgs", self.repo_subdirectory, item_name)
