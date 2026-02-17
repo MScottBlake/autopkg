@@ -7,11 +7,7 @@ requirements are enforced by [pre-commit](https://pre-commit.com).
 
 ## Use relocatable-python to safely build 3
 
-We recommend using Greg Neagle's [Relocatable Python](https://github.com/gregneagle/relocatable-python) to build a custom Python 3 framework. While the repository no longer tracks `requirements.txt` directly (as `pyproject.toml` is the source of truth), you can generate one using [uv](https://github.com/astral-sh/uv):
-
-```sh
-uv export --format requirements-txt --no-hashes --no-header --no-dev -o requirements.txt
-```
+We recommend using Greg Neagle's [Relocatable Python](https://github.com/gregneagle/relocatable-python) to build a custom Python 3 framework with the included [requirements.txt](requirements.txt).
 
 First, create a safe path to place your frameworks. The easiest choice is
 /Users/Shared, because you won't have any permissions issues there, but you can
@@ -21,10 +17,10 @@ place this anywhere that makes sense to you:
 mkdir -p /Users/Shared/Python3
 ```
 
-Now create your relocatable Python frameworks using the generated requirements.txt file:
+Now create your relocatable Python frameworks using the provided `requirements.txt` file:
 
 ```sh
-./make_relocatable_python_framework.py --python-version 3.10.11 --pip-requirements /path/to/requirements.txt --destination /Users/Shared/Python3/
+./make_relocatable_python_framework.py --python-version 3.10.11 --pip-requirements /path/to/autopkg/requirements.txt --destination /Users/Shared/Python3/
 ```
 
 ### Symlink the frameworks

@@ -10,7 +10,6 @@ autopkgc
 *.egg-info/
 build/
 dist/
-requirements.txt
 
 # IDE-specific files
 .vscode
