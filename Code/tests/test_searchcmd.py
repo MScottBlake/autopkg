@@ -490,9 +490,10 @@ class TestSearchCmd(unittest.TestCase):
             0,
         )
 
-        with patch("sys.stdout", new=StringIO()), patch(
-            "sys.stderr", new=StringIO()
-        ) as mock_stderr:
+        with (
+            patch("sys.stdout", new=StringIO()),
+            patch("sys.stderr", new=StringIO()) as mock_stderr,
+        ):
             check_search_cache(cache_path)
             stderr_output = mock_stderr.getvalue()
 
@@ -531,9 +532,10 @@ class TestSearchCmd(unittest.TestCase):
             0,
         )
 
-        with patch("sys.stdout", new=StringIO()) as mock_stdout, patch(
-            "sys.stderr", new=StringIO()
-        ) as mock_stderr:
+        with (
+            patch("sys.stdout", new=StringIO()) as mock_stdout,
+            patch("sys.stderr", new=StringIO()) as mock_stderr,
+        ):
             check_search_cache(cache_path)
             stdout_output = mock_stdout.getvalue()
             stderr_output = mock_stderr.getvalue()
@@ -921,9 +923,10 @@ class TestSearchCmd(unittest.TestCase):
         ).encode()
 
         argv = ["autopkg", "search", "recipe"]
-        with patch("sys.stdout", new=StringIO()), patch(
-            "sys.stderr", new=StringIO()
-        ) as mock_stderr:
+        with (
+            patch("sys.stdout", new=StringIO()),
+            patch("sys.stderr", new=StringIO()) as mock_stderr,
+        ):
             result = search_recipes(argv)
 
         # Should return 0 and print warning message
@@ -981,9 +984,10 @@ class TestSearchCmd(unittest.TestCase):
 
         argv = ["autopkg", "search", "--use-token", "NetNewsWire"]
         # Warnings go to stderr via log_err, so we need to capture both
-        with patch("sys.stdout", new=StringIO()) as fake_out, patch(
-            "sys.stderr", new=StringIO()
-        ) as fake_err:
+        with (
+            patch("sys.stdout", new=StringIO()) as fake_out,
+            patch("sys.stderr", new=StringIO()) as fake_err,
+        ):
             result = search_recipes(argv)
             stdout = fake_out.getvalue()
             stderr = fake_err.getvalue()
@@ -1061,9 +1065,10 @@ class TestSearchCmd(unittest.TestCase):
         ).encode()
 
         argv = ["autopkg", "search", "recipe"]
-        with patch("sys.stdout", new=StringIO()) as mock_stdout, patch(
-            "sys.stderr", new=StringIO()
-        ) as mock_stderr:
+        with (
+            patch("sys.stdout", new=StringIO()) as mock_stdout,
+            patch("sys.stderr", new=StringIO()) as mock_stderr,
+        ):
             search_recipes(argv)
             stdout = mock_stdout.getvalue()
             stderr = mock_stderr.getvalue()
@@ -1179,9 +1184,10 @@ class TestSearchCmd(unittest.TestCase):
         """Test that print_gh_search_results handles empty results gracefully."""
         results = []
 
-        with patch("sys.stdout", new=StringIO()) as fake_out, patch(
-            "sys.stderr", new=StringIO()
-        ) as fake_err:
+        with (
+            patch("sys.stdout", new=StringIO()) as fake_out,
+            patch("sys.stderr", new=StringIO()) as fake_err,
+        ):
             print_gh_search_results(results)
             output = fake_out.getvalue() + fake_err.getvalue()
 

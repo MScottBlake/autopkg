@@ -59,26 +59,18 @@ class TestAutoPkgRun(unittest.TestCase):
 
         argv = ["autopkg", "install", "TestApp"]
 
-        with patch.object(autopkg, "get_override_dirs", return_value=[]), patch.object(
-            autopkg, "get_search_dirs", return_value=[]
-        ), patch.object(
-            autopkg, "get_pref", return_value=self.tmp_dir.name
-        ), patch.object(
-            autopkg, "load_recipe", return_value=None
-        ) as mock_load_recipe, patch(
-            "os.path.exists", return_value=True
-        ), patch(
-            "os.makedirs"
-        ), patch.object(
-            autopkg, "plist_serializer", return_value={}
-        ), patch.object(
-            autopkg.plistlib, "dump"
-        ), patch.object(
-            autopkg, "log_err"
-        ), patch.object(
-            autopkg, "log"
+        with (
+            patch.object(autopkg, "get_override_dirs", return_value=[]),
+            patch.object(autopkg, "get_search_dirs", return_value=[]),
+            patch.object(autopkg, "get_pref", return_value=self.tmp_dir.name),
+            patch.object(autopkg, "load_recipe", return_value=None) as mock_load_recipe,
+            patch("os.path.exists", return_value=True),
+            patch("os.makedirs"),
+            patch.object(autopkg, "plist_serializer", return_value={}),
+            patch.object(autopkg.plistlib, "dump"),
+            patch.object(autopkg, "log_err"),
+            patch.object(autopkg, "log"),
         ):
-
             # Run recipes - with mocked plistlib.dump, this should complete successfully
             # The test focuses on verifying the recipe name transformation logic
             autopkg.run_recipes(argv)
@@ -92,24 +84,17 @@ class TestAutoPkgRun(unittest.TestCase):
         """Test run_recipes with install verb rejects non-.install extensions."""
         argv = ["autopkg", "install", "TestApp.recipe"]
 
-        with patch.object(autopkg, "get_override_dirs", return_value=[]), patch.object(
-            autopkg, "get_search_dirs", return_value=[]
-        ), patch.object(
-            autopkg, "get_pref", return_value=self.tmp_dir.name
-        ), patch.object(
-            autopkg, "load_recipe", return_value=None
-        ), patch(
-            "os.path.exists", return_value=True
-        ), patch(
-            "os.makedirs"
-        ), patch.object(
-            autopkg, "plist_serializer", return_value={}
-        ), patch.object(
-            autopkg.plistlib, "dump"
-        ), patch.object(
-            autopkg, "log_err"
-        ) as mock_log_err:
-
+        with (
+            patch.object(autopkg, "get_override_dirs", return_value=[]),
+            patch.object(autopkg, "get_search_dirs", return_value=[]),
+            patch.object(autopkg, "get_pref", return_value=self.tmp_dir.name),
+            patch.object(autopkg, "load_recipe", return_value=None),
+            patch("os.path.exists", return_value=True),
+            patch("os.makedirs"),
+            patch.object(autopkg, "plist_serializer", return_value={}),
+            patch.object(autopkg.plistlib, "dump"),
+            patch.object(autopkg, "log_err") as mock_log_err,
+        ):
             try:
                 autopkg.run_recipes(argv)
             except OSError as e:
@@ -139,10 +124,11 @@ class TestAutoPkgRun(unittest.TestCase):
             "TestApp2.recipe",
         ]
 
-        with patch.object(autopkg, "get_override_dirs", return_value=[]), patch.object(
-            autopkg, "get_search_dirs", return_value=[]
-        ), patch.object(autopkg, "log_err"):
-
+        with (
+            patch.object(autopkg, "get_override_dirs", return_value=[]),
+            patch.object(autopkg, "get_search_dirs", return_value=[]),
+            patch.object(autopkg, "log_err"),
+        ):
             result = autopkg.run_recipes(argv)
             self.assertEqual(result, -1)
 
@@ -150,10 +136,11 @@ class TestAutoPkgRun(unittest.TestCase):
         """Test run_recipes with invalid key=value format."""
         argv = ["autopkg", "run", "-k", "INVALID_FORMAT", "TestApp.recipe"]
 
-        with patch.object(autopkg, "get_override_dirs", return_value=[]), patch.object(
-            autopkg, "get_search_dirs", return_value=[]
-        ), patch.object(autopkg, "log_err"):
-
+        with (
+            patch.object(autopkg, "get_override_dirs", return_value=[]),
+            patch.object(autopkg, "get_search_dirs", return_value=[]),
+            patch.object(autopkg, "log_err"),
+        ):
             result = autopkg.run_recipes(argv)
             self.assertEqual(result, 1)
 
@@ -161,24 +148,17 @@ class TestAutoPkgRun(unittest.TestCase):
         """Test run_recipes when recipe is not found."""
         argv = ["autopkg", "run", "NonExistentRecipe.recipe"]
 
-        with patch.object(autopkg, "get_override_dirs", return_value=[]), patch.object(
-            autopkg, "get_search_dirs", return_value=[]
-        ), patch.object(
-            autopkg, "get_pref", return_value=self.tmp_dir.name
-        ), patch.object(
-            autopkg, "load_recipe", return_value=None
-        ), patch(
-            "os.path.exists", return_value=True
-        ), patch(
-            "os.makedirs"
-        ), patch.object(
-            autopkg, "plist_serializer", return_value={}
-        ), patch.object(
-            autopkg.plistlib, "dump"
-        ), patch.object(
-            autopkg, "log_err"
+        with (
+            patch.object(autopkg, "get_override_dirs", return_value=[]),
+            patch.object(autopkg, "get_search_dirs", return_value=[]),
+            patch.object(autopkg, "get_pref", return_value=self.tmp_dir.name),
+            patch.object(autopkg, "load_recipe", return_value=None),
+            patch("os.path.exists", return_value=True),
+            patch("os.makedirs"),
+            patch.object(autopkg, "plist_serializer", return_value={}),
+            patch.object(autopkg.plistlib, "dump"),
+            patch.object(autopkg, "log_err"),
         ):
-
             result = None
             try:
                 result = autopkg.run_recipes(argv)
@@ -289,32 +269,21 @@ TestApp2.recipe
             )
 
             # Create a temporary directory for cache
-            with patch.object(
-                autopkg, "get_override_dirs", return_value=[]
-            ), patch.object(autopkg, "get_search_dirs", return_value=[]), patch.object(
-                autopkg, "get_pref", return_value=self.tmp_dir.name
-            ), patch.object(
-                autopkg, "load_recipe", return_value=mock_recipe
-            ), patch.object(
-                autopkg, "AutoPackager", return_value=mock_autopackager
-            ), patch.object(
-                autopkg, "verify_parent_trust"
-            ), patch(
-                "os.path.exists", return_value=True
-            ), patch(
-                "os.makedirs"
-            ), patch.object(
-                autopkg, "plist_serializer", return_value={}
-            ), patch.object(
-                autopkg.plistlib, "dump"
-            ), patch.object(
-                autopkg, "log"
-            ), patch.object(
-                autopkg, "log_err"
-            ), patch.object(
-                autopkg, "write_plist_exit_on_fail"
-            ) as mock_write_plist:
-
+            with (
+                patch.object(autopkg, "get_override_dirs", return_value=[]),
+                patch.object(autopkg, "get_search_dirs", return_value=[]),
+                patch.object(autopkg, "get_pref", return_value=self.tmp_dir.name),
+                patch.object(autopkg, "load_recipe", return_value=mock_recipe),
+                patch.object(autopkg, "AutoPackager", return_value=mock_autopackager),
+                patch.object(autopkg, "verify_parent_trust"),
+                patch("os.path.exists", return_value=True),
+                patch("os.makedirs"),
+                patch.object(autopkg, "plist_serializer", return_value={}),
+                patch.object(autopkg.plistlib, "dump"),
+                patch.object(autopkg, "log"),
+                patch.object(autopkg, "log_err"),
+                patch.object(autopkg, "write_plist_exit_on_fail") as mock_write_plist,
+            ):
                 # Run the function
                 result = autopkg.run_recipes(argv)
 
