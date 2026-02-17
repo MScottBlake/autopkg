@@ -25,6 +25,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "coverage>=7.0.0",
     "generateDS>=2.44.3; sys_platform == 'win32'",
     "pre-commit>=4.5.1",
     "ruff>=0.15.1",
@@ -71,3 +72,20 @@ max-complexity = 65
 
 [tool.ruff.lint.isort]
 known-third-party = ["appdirs", "certifi", "xattr"]
+
+[tool.coverage.run]
+omit = [
+    "Code/nuget/generated/*",
+    "*/test_*",
+    "*/tests/*",
+    "*/__pycache__/*",
+    "*/venv/*",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+]
