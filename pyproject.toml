@@ -8,12 +8,26 @@ dynamic = ["version"]
 description = "Add your description here"
 readme = "ReadMe.md"
 requires-python = ">=3.10"
-dependencies = []
+dependencies = [
+    "appdirs==1.4.4",
+    "certifi==2025.10.5",
+    "lxml==6.0.2",
+    "PyYAML==6.0.3",
+    "xattr==1.2.0; sys_platform == 'darwin' or sys_platform == 'linux'",
+    "pyobjc-core==11.1; sys_platform == 'darwin'",
+    "pyobjc-framework-CFNetwork==11.1; sys_platform == 'darwin'",
+    "pyobjc-framework-LaunchServices==11.1; sys_platform == 'darwin'",
+    "pyobjc-framework-OpenDirectory==11.1; sys_platform == 'darwin'",
+    "pyobjc-framework-Quartz==11.1; sys_platform == 'darwin'",
+    "pyobjc-framework-Security==11.1; sys_platform == 'darwin'",
+    "pyobjc-framework-SystemConfiguration==11.1; sys_platform == 'darwin'",
+]
 
 [dependency-groups]
 dev = [
     "flake8>=7.3.0",
     "flake8-bugbear>=24.12.12",
+    "generateDS==2.44.3; sys_platform == 'win32'",
     "pre-commit>=4.5.1",
     "ruff>=0.15.1",
 ]

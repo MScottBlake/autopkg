@@ -261,6 +261,21 @@ def main():
     subprocess.check_call(git_cmd)
     os.chdir(autopkg_root)
 
+    print("** Generating requirements.txt using uv")
+    subprocess.check_call(
+        [
+            "uv",
+            "export",
+            "--format",
+            "requirements-txt",
+            "--no-hashes",
+            "--no-header",
+            "--no-dev",
+            "-o",
+            "requirements.txt",
+        ]
+    )
+
     print("** Running AutoPkgGitMaster.pkg recipe")
     # running using the system AutoPkg directory so that we ensure we're at the
     # minimum required version to run the AutoPkg recipe
