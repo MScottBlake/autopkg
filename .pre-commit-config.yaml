@@ -1,5 +1,9 @@
 exclude: "^Code/nuget/generated/.*$"
 repos:
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: 1bd9266921fbea6649150af7a0e9206ab3cd5a63  # frozen: 0.10.3
+    hooks:
+      - id: uv-lock
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: fa93bc3224c614a0e9786d3e2d3d48edcca246eb  # frozen: v0.15.1
     hooks:
@@ -10,5 +14,5 @@ repos:
     rev: abd988f48732d85a9584b7daa7edee3410a0b62e  # frozen: v0.1.22
     hooks:
       - id: rumdl
-        args: ["--fix"]
+        args: [ --fix ]
       - id: rumdl-fmt
