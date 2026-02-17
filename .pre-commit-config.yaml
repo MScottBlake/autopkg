@@ -10,6 +10,9 @@ repos:
       - id: check-merge-conflict
       - id: check-toml
       - id: check-yaml
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+      - id: trailing-whitespace
   - repo: https://github.com/astral-sh/uv-pre-commit
     rev: 1bd9266921fbea6649150af7a0e9206ab3cd5a63  # frozen: 0.10.3
     hooks:
