@@ -29,14 +29,34 @@ dev = [
     "generateDS>=2.44.3; sys_platform == 'win32'",
     "pre-commit>=4.5.1",
     "ruff>=0.15.1",
+    "rumdl>=0.1.0",
 ]
 
 [tool.setuptools.dynamic]
 version = {attr = "autopkglib._version.__version__"}
 
 [tool.setuptools]
-package-dir = {"" = "Code"}
+package-dir = { "autopkgcmd" = "Code/autopkgcmd", "autopkglib" = "Code/autopkglib", "autopkgserver" = "Code/autopkgserver", "nuget" = "Code/nuget" }
 packages = ["autopkgcmd", "autopkglib", "autopkgserver", "nuget"]
+
+[tool.rumdl]
+disable = ["MD010", "MD013", "MD034", "MD049", "MD040", "MD059"]
+
+[tool.rumdl.MD003]
+style = "consistent"
+
+[tool.rumdl.MD004]
+style = "consistent"
+
+[tool.rumdl.MD007]
+indent = 4
+style = "fixed"
+
+[tool.rumdl.MD012]
+maximum = 2
+
+[tool.rumdl.MD024]
+siblings-only = true
 
 [tool.ruff]
 line-length = 88

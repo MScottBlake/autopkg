@@ -1,8 +1,14 @@
 exclude: "^Code/nuget/generated/.*$"
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.9.4
+    rev: fa93bc3224c614a0e9786d3e2d3d48edcca246eb  # frozen: v0.15.1
     hooks:
-      - id: ruff
+      - id: ruff-check
         args: [ --fix ]
       - id: ruff-format
+  - repo: https://github.com/rvben/rumdl-pre-commit
+    rev: abd988f48732d85a9584b7daa7edee3410a0b62e  # frozen: v0.1.22
+    hooks:
+      - id: rumdl
+        args: ["--fix"]
+      - id: rumdl-fmt
