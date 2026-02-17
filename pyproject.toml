@@ -7,7 +7,7 @@ name = "autopkg"
 dynamic = ["version"]
 description = "Add your description here"
 readme = "ReadMe.md"
-requires-python = ">=3.10"
+requires-python = ">=3.10, <3.14"
 dependencies = [
     "appdirs==1.4.4",
     "certifi==2025.10.5",
@@ -25,9 +25,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "flake8>=7.3.0",
-    "flake8-bugbear>=24.12.12",
-    "generateDS==2.44.3; sys_platform == 'win32'",
+    "generateDS>=2.44.3; sys_platform == 'win32'",
     "pre-commit>=4.5.1",
     "ruff>=0.15.1",
 ]
@@ -42,10 +40,34 @@ packages = ["autopkgcmd", "autopkglib", "autopkgserver", "nuget"]
 [tool.ruff]
 line-length = 88
 src = ["Code"]
-target-version = "py310"
+extend-exclude = [
+    "Code/nuget/generated/*",
+]
 
 [tool.ruff.lint]
-select = ["I"]
+select = [
+    "B",    # flake8-bugbear
+    "C90",  # mccabe
+    "E",    # pycodestyle errors
+    "F",    # pyflakes
+    "I",    # isort
+    "W",    # pycodestyle warnings
+]
+ignore = [
+    "B904", # Within an `except` clause, raise exceptions with `raise ... from err`
+    "E501", # line too long
+]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 65
+
+[tool.ruff.lint.per-file-ignores]
+"Code/tests/*" = [
+    "B017", # Asserting blind exception
+]
+"Scripts/*.py" = [
+    "E402", # module level import not at top of file
+]
 
 [tool.ruff.lint.isort]
 known-third-party = ["appdirs", "certifi", "xattr"]

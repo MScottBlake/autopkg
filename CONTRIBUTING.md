@@ -1,17 +1,17 @@
 # Python formatting
 
-This project uses three methods of code style enforcement, linting, and checking:
-
-* [flake8](http://flake8.pycqa.org/en/latest) with [bugbear](https://github.com/PyCQA/flake8-bugbear)
-* [isort](https://github.com/timothycrosley/isort)
-* [black](https://github.com/python/black)
+This project uses [ruff](https://github.com/astral-sh/ruff) for code formatting, import sorting, and linting.
 
 All code that is contributed to AutoPkg must match these style requirements. These
 requirements are enforced by [pre-commit](https://pre-commit.com).
 
 ## Use relocatable-python to safely build 3
 
-We recommend using Greg Neagle's [Relocatable Python](https://github.com/gregneagle/relocatable-python) to build a custom Python 3 framework with the included [requirements.txt](https://github.com/autopkg/autopkg/blob/master/requirements.txt).
+We recommend using Greg Neagle's [Relocatable Python](https://github.com/gregneagle/relocatable-python) to build a custom Python 3 framework. While the repository no longer tracks `requirements.txt` directly (as `pyproject.toml` is the source of truth), you can generate one using [uv](https://github.com/astral-sh/uv):
+
+```sh
+uv export --format requirements-txt --no-hashes --no-header --no-dev -o requirements.txt
+```
 
 First, create a safe path to place your frameworks. The easiest choice is
 /Users/Shared, because you won't have any permissions issues there, but you can
@@ -21,7 +21,7 @@ place this anywhere that makes sense to you:
 mkdir -p /Users/Shared/Python3
 ```
 
-Now create your relocatable Python frameworks using the provided requirements.txt files:
+Now create your relocatable Python frameworks using the generated requirements.txt file:
 
 ```sh
 ./make_relocatable_python_framework.py --python-version 3.10.11 --pip-requirements /path/to/requirements.txt --destination /Users/Shared/Python3/
@@ -47,21 +47,6 @@ cd ~/autopkg
 /Users/Shared/Python3/Python.framework/Versions/3.7/bin/pre-commit install --install-hooks
 ```
 
-```console
-pre-commit installed at .git\hooks\pre-commit
-[INFO] Initializing environment for https://github.com/pre-commit/mirrors-isort.
-[INFO] Initializing environment for https://github.com/pre-commit/pre-commit-hooks.
-[INFO] Installing environment for https://github.com/python/black.
-[INFO] Once installed this environment will be reused.
-[INFO] This may take a few minutes...
-[INFO] Installing environment for https://github.com/pre-commit/mirrors-isort.
-[INFO] Once installed this environment will be reused.
-[INFO] This may take a few minutes...
-[INFO] Installing environment for https://github.com/pre-commit/pre-commit-hooks.
-[INFO] Once installed this environment will be reused.
-[INFO] This may take a few minutes...
-```
-
 Once installed, all commits will run the test hooks. If your commit fails any of
 the tests, the commit will be rejected.
 
@@ -72,23 +57,19 @@ git commit -m "test a bad commit for pre-commit"
 ```
 
 ```console
-black....................................................................Failed
-hookid: black
+ruff.....................................................................Failed
+hookid: ruff
 
-Files were modified by this hook. Additional output:
+Code/autopkglib/AppDmgVersioner.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+Found 1 error.
+[*] 1 fixable with the `--fix` option.
 
-reformatted Code\autopkglib\AppDmgVersioner.py
-All done! \u2728 \U0001f370 \u2728
-1 file reformatted.
+ruff-format..............................................................Failed
+hookid: ruff-format
 
-isort....................................................................Failed
-hookid: isort
+1 file reformatted
 
-Files were modified by this hook. Additional output:
-
-Fixing C:\Users\nmcspadden\Documents\GitHub\nmcspadden-autopkg\Code\autopkglib\AppDmgVersioner.py
-
-Flake8...................................................................Failed
+flake8...................................................................Failed
 hookid: flake8
 
 Code/autopkglib/AppDmgVersioner.py:31:1: E303 too many blank lines (3)
@@ -101,9 +82,9 @@ git commit -m "test a good commit for pre-commit"
 ```
 
 ```console
-black....................................................................Passed
-isort....................................................................Passed
-Flake8...................................................................Passed
+ruff.....................................................................Passed
+ruff-format..............................................................Passed
+flake8...................................................................Passed
 [test ebe7fea] test2 for pre-commit
  1 file changed, 3 insertions(+)
 ```
