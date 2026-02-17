@@ -130,7 +130,6 @@ class TestAutoPkg(unittest.TestCase):
     def setUp(self):
         # This forces autopkglib to accept our patching of memoize
         imp.reload(autopkglib)
-        autopkglib.globalPreferences
 
     def tearDown(self):
         pass

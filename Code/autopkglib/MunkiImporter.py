@@ -375,7 +375,7 @@ class MunkiImporter(Processor):
         # if pkginfo has an installs item
         if "installs" in pkginfo and self.env.get("version_comparison_key"):
             for item in pkginfo["installs"]:
-                if not self.env["version_comparison_key"] in item:
+                if self.env["version_comparison_key"] not in item:
                     raise ProcessorError(
                         "version_comparison_key "
                         f"'{self.env['version_comparison_key']}' could not be "

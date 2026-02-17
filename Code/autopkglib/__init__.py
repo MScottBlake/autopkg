@@ -34,6 +34,8 @@ from typing import IO, Any, Union
 import appdirs
 import yaml
 
+from ._version import __version__
+
 # Type for methods that accept either a filesystem path or a file-like object.
 FileOrPath = Union[IO, str, bytes, int]
 
@@ -400,9 +402,6 @@ def find_recipe_by_identifier(identifier, search_dirs) -> str | None:
     return None
 
 
-from ._version import __version__
-
-
 def get_autopkg_version() -> str:
     """Gets the version number of autopkg"""
     return __version__
@@ -584,7 +583,7 @@ class Processor:
         plist_safe = {}
 
         for env_key in self.env:
-            if not self.env[env_key] is None:
+            if self.env[env_key] is not None:
                 plist_safe[env_key] = self.env[env_key]
 
         try:

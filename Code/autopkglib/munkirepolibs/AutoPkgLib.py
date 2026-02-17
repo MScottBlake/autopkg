@@ -46,7 +46,7 @@ class AutoPkgLib:
 
             # add to hash table
             if "installer_item_hash" in item:
-                if not item["installer_item_hash"] in hash_table:
+                if item["installer_item_hash"] not in hash_table:
                     hash_table[item["installer_item_hash"]] = []
                 hash_table[item["installer_item_hash"]].append(itemindex)
 
