@@ -363,7 +363,7 @@ def main():
         pkg_data = fdesc.read()
 
     # prepare release metadata
-    release_data = dict()
+    release_data = {}
     release_data["tag_name"] = tag_name
     release_data["target_commitish"] = opts.autopkg_branch
     release_data["name"] = "AutoPkg " + current_version

@@ -54,7 +54,7 @@ class TestPreferences(unittest.TestCase):
         self.mock_copykeylist = patch("autopkglib.CFPreferencesCopyKeyList").start()
         # Return an empty list of preference keys by default. Makes a new list on
         # every call to ensure no false sharing.
-        self.mock_copykeylist.side_effect = lambda *_, **_kw: list()
+        self.mock_copykeylist.side_effect = lambda *_, **_kw: []
         self.mock_copyappvalue = patch("autopkglib.CFPreferencesCopyAppValue").start()
         self.mock_setappvalue = patch("autopkglib.CFPreferencesSetAppValue").start()
         self.mock_appsynchronize = patch(

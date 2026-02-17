@@ -2179,7 +2179,7 @@ def run_recipes(argv):  # noqa: C901
         log_err(f"Can't write results to {current_run_results_plist}: {err.strerror}")
 
     if options.report_plist:
-        results_report = dict()
+        results_report = {}
         write_plist_exit_on_fail(results_report, options.report_plist)
 
     make_suggestions = True
